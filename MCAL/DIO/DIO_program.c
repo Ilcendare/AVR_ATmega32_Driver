@@ -1,7 +1,7 @@
 /** ========================= The file information ========================== */
 /**
  *  Project      : AVR_ATmega32_Driver
- * 	File name    : DIO_program.c
+ *  File name    : DIO_program.c
  *  Created on   : Aug 12, 2023
  *  Author       : ENG. Mahmoud Sayed
  **/

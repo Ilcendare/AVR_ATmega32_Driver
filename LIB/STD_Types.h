@@ -1,7 +1,7 @@
 /** ========================= The file information ========================== */
 /**
  *  Project: AVR_ATmega32_Driver
- * 	File name: STD_Types.h
+ *  File name: STD_Types.h
  *  Created on: Aug 12, 2023
  *  Author: ENG. Mahmoud Sayed
  **/

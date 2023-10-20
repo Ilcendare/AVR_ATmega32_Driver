@@ -1,7 +1,7 @@
 /** ========================= The file information ========================== */
 /**
  *  Project     : AVR_ATmega32_Driver
- * 	File name   : main.c
+ *  File name   : main.c
  *  Created on  : Aug 14, 2023
  *  Author      : ENG. Mahmoud Sayed
  **/

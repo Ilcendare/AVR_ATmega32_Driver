@@ -1,7 +1,7 @@
 /** ========================= The file information ========================== */
 /**
  *  Project		: AVR_ATmega32_Driver
- * 	File name	: SEVEN_SEG_program.h
+ *  File name	: SEVEN_SEG_program.h
  *  Created on	: Oct 20, 2023
  *  Author		: ENG. Mahmoud Sayed
  **/
