@@ -27,30 +27,20 @@ void HAL_SEVEN_SEG_voidDisplay(COM_t Copy_COM_tCOMn, u8 Copy_u8BCDNumber)
 	switch(Copy_COM_tCOMn)
 	{
 		case COM1:
-			MCAL_DIO_voidSetPinMode(DIOA,PIN3,Output);
 			MCAL_DIO_voidWritePin(DIOA,PIN3,Low);
 			break;
 		case COM2:
-			MCAL_DIO_voidSetPinMode(DIOA,PIN2,Output);
 			MCAL_DIO_voidWritePin(DIOA,PIN2,Low);
 			break;
 		case COM3:
-			MCAL_DIO_voidSetPinMode(DIOB,PIN5,Output);
 			MCAL_DIO_voidWritePin(DIOB,PIN5,Low);
 			break;
 		case COM4:
-			MCAL_DIO_voidSetPinMode(DIOB,PIN6,Output);
 			MCAL_DIO_voidWritePin(DIOB,PIN6,Low);
 			break;
 		default:
 			break;
 	}
-
-	/* Set all the A, B, C, and D pins as Output */
-	MCAL_DIO_voidSetPinMode(DIOB, PIN0, Output); // Set A as output
-	MCAL_DIO_voidSetPinMode(DIOB, PIN1, Output); // Set B as output
-	MCAL_DIO_voidSetPinMode(DIOB, PIN2, Output); // Set C as output
-	MCAL_DIO_voidSetPinMode(DIOB, PIN4, Output); // Set D as output
 
 	/* Assign the A, B, C, and D pins to the given BCD number */
 	MCAL_DIO_voidWritePin(DIOB, PIN0, GET_BIT(Copy_u8BCDNumber,0)); // A
