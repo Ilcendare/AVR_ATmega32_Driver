@@ -1,35 +1,64 @@
-/*
- * LCD_program.c
- *
- *  Created on: Aug 15, 2023
- *  Author: ENG. Mahmoud Sayed
- */
+/** ========================= The file information ========================== */
+/**
+ *  Project     : AVR_ATmega32_Driver
+ *  File name   : LCD_program.c
+ *  Created on  : Aug 15, 2023
+ *  Author      : ENG. Mahmoud Sayed
+ **/
+/** ========================================================================= */
 
 
-#include <BIT_Math.h>
-#include "../../LIB/STD_Types.h"
+
+
+/** =========================== All Included Files ========================== */
+#include "BIT_Math.h"
+#include "STD_Types.h"
 #include "LCD_interface.h"
-#include "../../MCAL/DIO/DIO_interface.h"
+#include "DIO_interface.h"
 #include <util/delay.h>
 #include "LCD_config.h"
+/** ========================================================================= */
 
 
+
+
+/** =========================== Defining LCD Macros ========================= */
+#if  LCD_16x2 == 1
+	#define COL_MAX 16
+	#define ROW_MAX 2
+#elif LCD_40x2 == 1
+	#define COL_MAX 40
+	#define ROW_MAX 2
+#elif LCD_20x4 == 1
+	#define COL_MAX 20
+	#define ROW_MAX 4
+#endif
+/** ========================================================================= */
+
+
+
+
+/** ======================== Defining global variables ====================== */
 static u8 InitFinished = 0;
+/** ========================================================================= */
 
 
+
+
+
+/** ====================== LCD Functions Implementation ===================== */
 void HAL_LCD_Init()
 {
-	// Configuring the LCD pins
-	// ============================= //
-	MCAL_DIO_voidSetPinMode(RS, Output);
+	/* Configuring the LCD pins */
+
+	MCAL_DIO_voidSetPinMode(RS , Output);
 	MCAL_DIO_voidSetPinMode(E  , Output);
 	MCAL_DIO_voidSetPinMode(DB7, Output);
 	MCAL_DIO_voidSetPinMode(DB6, Output);
 	MCAL_DIO_voidSetPinMode(DB5, Output);
 	MCAL_DIO_voidSetPinMode(DB4, Output);
-	// ============================= //
 
-	// LCD software initializations:
+	/* LCD software initializations */
 
 	_delay_ms(31);
 
@@ -49,7 +78,7 @@ void HAL_LCD_Init()
 
 	_delay_ms(1.6);
 
-	// End of initialization
+	/* End of initialization */
 
 	InitFinished = 1;
 }
@@ -70,7 +99,7 @@ void HAL_LCD_SendCommand(u8 cmd)
 
 	MCAL_DIO_voidWritePin(E, Low);
 
-	if(InitFinished)
+	if(InitFinished)	// Not used while Initialization
 	{
 		MCAL_DIO_voidWritePin(DB4, GET_BIT(cmd,0));
 		MCAL_DIO_voidWritePin(DB5, GET_BIT(cmd,1));
@@ -142,10 +171,22 @@ void HAL_LCD_ChangePos(u8 row, u8 col)
 {
 	if(row < ROW_MAX && col < COL_MAX)
 	{
-		u8 Address;
-		Address = (row * 0x40) + col;
-		SET_BIT(Address,7);
-		HAL_LCD_SendCommand(Address);
+		switch(row)
+		{
+		case 0:
+			HAL_LCD_SendCommand(0x80 + col);
+			break;
+		case 1:
+			HAL_LCD_SendCommand(0xC0 + col);
+			break;
+		case 2:
+			HAL_LCD_SendCommand(0x94 + col);
+			break;
+		case 3:
+			HAL_LCD_SendCommand(0xD4 + col);
+			break;
+		}
+
 	}
 }
 
@@ -166,3 +207,4 @@ void HAL_LCD_AddPattern(u8* Pattern, u8 CGRAM_index)
 		_delay_ms(2);
 	}
 }
+/** ========================================================================= */
