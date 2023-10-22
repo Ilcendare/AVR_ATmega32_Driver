@@ -28,9 +28,13 @@
 #define ROW3	DIOC, PIN3
 #define ROW4	DIOC, PIN2
 
-/* Order of rows: row1 , row2, row3, row4 */
-#define Rows_Pins	{5 ,  4 ,  3 ,  2   }
-#define Rows_Ports	{DIOC,DIOC,DIOC,DIOC}
+/* Rows order:    {row1 , row2, row3, row4} */
+#define ROW_PINS	{PIN5,PIN4,PIN3,PIN2}
+#define ROW_PORTS	{DIOC,DIOC,DIOC,DIOC}
+
+/* Columns order: {col1 , col2, col3, col4} */
+#define COL_PINS	{PIN7,PIN6,PIN5,PIN3}
+#define COL_PORTS	{DIOD,DIOD,DIOD,DIOD}
 /** ========================================================================= */
 
 

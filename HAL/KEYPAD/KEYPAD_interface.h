@@ -19,11 +19,9 @@
 
 
 /** ========================= Defining KEYPAD Macros ======================== */
-/* Initialize the rows and columns pins */
 void HAL_KEYPAD_Init(void);
-
-/* Read the pressed button of the keypad */
 u8 HAL_KEYPAD_ReadData(void);
+
 /** ========================================================================= */
 
 

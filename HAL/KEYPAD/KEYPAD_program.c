@@ -31,8 +31,14 @@
 
 
 /** ======================== Defining global variables ====================== */
-u8 rows[4] = Rows_Pins;
-u8 row_ports[4] = Rows_Ports;
+u8 Row_Pin[4] = ROW_PINS;
+u8 Row_Port[4] = ROW_PORTS;
+
+u8 Col_Pin[4] = COL_PINS;
+u8 Col_Port[4] = COL_PORTS;
+
+typedef enum rows_enum {row1,row2,row3,row4} row_t;
+typedef enum cols_enum {col1,col2,col3,col4} col_t;
 /** ========================================================================= */
 
 
@@ -41,15 +47,15 @@ u8 row_ports[4] = Rows_Ports;
 /** ===================== KEYPAD Functions Implementation =================== */
 void HAL_KEYPAD_Init(void)
 {
-	MCAL_DIO_voidSetPinMode(COL1, Input);
-	MCAL_DIO_voidSetPinMode(COL2, Input);
-	MCAL_DIO_voidSetPinMode(COL3, Input);
-	MCAL_DIO_voidSetPinMode(COL4, Input);
+	MCAL_DIO_voidSetPinMode(Col_Port[col1], Col_Pin[col1], Input);
+	MCAL_DIO_voidSetPinMode(Col_Port[col2], Col_Pin[col2], Input);
+	MCAL_DIO_voidSetPinMode(Col_Port[col3], Col_Pin[col3], Input);
+	MCAL_DIO_voidSetPinMode(Col_Port[col4], Col_Pin[col4], Input);
 
-	MCAL_DIO_voidSetPinMode(ROW1, Output);
-	MCAL_DIO_voidSetPinMode(ROW2, Output);
-	MCAL_DIO_voidSetPinMode(ROW3, Output);
-	MCAL_DIO_voidSetPinMode(ROW4, Output);
+	MCAL_DIO_voidSetPinMode(Row_Port[row1], Row_Pin[row1], Output);
+	MCAL_DIO_voidSetPinMode(Row_Port[row2], Row_Pin[row2], Output);
+	MCAL_DIO_voidSetPinMode(Row_Port[row3], Row_Pin[row3], Output);
+	MCAL_DIO_voidSetPinMode(Row_Port[row4], Row_Pin[row4], Output);
 }
 
 
@@ -58,18 +64,18 @@ u8 HAL_KEYPAD_ReadData(void)
 {
 	u8 value = 'Q';
 
-	MCAL_DIO_voidWritePin(row_ports[0], rows[0], High);
-	MCAL_DIO_voidWritePin(row_ports[0], rows[1], High);
-	MCAL_DIO_voidWritePin(row_ports[0], rows[2], High);
-	MCAL_DIO_voidWritePin(row_ports[0], rows[3], High);
+	MCAL_DIO_voidWritePin(Row_Port[row1], Row_Pin[row1], High);
+	MCAL_DIO_voidWritePin(Row_Port[row2], Row_Pin[row2], High);
+	MCAL_DIO_voidWritePin(Row_Port[row3], Row_Pin[row3], High);
+	MCAL_DIO_voidWritePin(Row_Port[row4], Row_Pin[row4], High);
 
-	for(u8 i = 0 ; i < 4 ; i++)
+	for(row_t i = row1 ; i <= row4 ; i++)
 	{
-		MCAL_DIO_voidWritePin(row_ports[i], rows[i], Low);
+		MCAL_DIO_voidWritePin(Row_Port[i], Row_Pin[i], Low);
 
 		_delay_ms(25);
 
-		if(MCAL_DIO_u8ReadPin(COL1) == Low)
+		if(MCAL_DIO_u8ReadPin(Col_Port[col1], Col_Pin[col1]) == Low)
 		{
 			if(i == 0)
 			{
@@ -89,7 +95,7 @@ u8 HAL_KEYPAD_ReadData(void)
 			}
 			break;
 		}
-		else if(MCAL_DIO_u8ReadPin(COL2) == Low)
+		else if(MCAL_DIO_u8ReadPin(Col_Port[col2], Col_Pin[col2]) == Low)
 		{
 			if(i == 0)
 			{
@@ -109,7 +115,7 @@ u8 HAL_KEYPAD_ReadData(void)
 			}
 			break;
 		}
-		else if(MCAL_DIO_u8ReadPin(COL3) == Low)
+		else if(MCAL_DIO_u8ReadPin(Col_Port[col3], Col_Pin[col3]) == Low)
 		{
 			if(i == 0)
 			{
@@ -129,7 +135,7 @@ u8 HAL_KEYPAD_ReadData(void)
 			}
 			break;
 		}
-		else if(MCAL_DIO_u8ReadPin(COL4) == Low)
+		else if(MCAL_DIO_u8ReadPin(Col_Port[col4], Col_Pin[col4]) == Low)
 		{
 			if(i == 0)
 			{
@@ -150,7 +156,7 @@ u8 HAL_KEYPAD_ReadData(void)
 			break;
 		}
 
-		MCAL_DIO_voidWritePin(row_ports[i], rows[i], High);
+		MCAL_DIO_voidWritePin(Row_Port[i], Row_Pin[i], High);
 	}
 
 	return value;
