@@ -186,7 +186,6 @@ void HAL_LCD_ChangePos(u8 row, u8 col)
 			HAL_LCD_SendCommand(0xD4 + col);
 			break;
 		}
-
 	}
 }
 

@@ -73,7 +73,7 @@ u8 HAL_KEYPAD_ReadData(void)
 	{
 		MCAL_DIO_voidWritePin(Row_Port[i], Row_Pin[i], Low);
 
-		_delay_ms(1);
+		//_delay_ms(25);
 
 		if(MCAL_DIO_u8ReadPin(Col_Port[col1], Col_Pin[col1]) == Low)
 		{

@@ -1,7 +1,7 @@
 /** ========================= The file information ========================== */
 /**
  *  Project      : AVR_ATmega32_Driver
- *  File name    : DIO_program.c
+ * 	File name    : DIO_program.c
  *  Created on   : Aug 12, 2023
  *  Author       : ENG. Mahmoud Sayed
  **/
@@ -105,7 +105,7 @@ void MCAL_DIO_voidWritePin(DIOPort_t Copy_DIOPort_tDIOx, DIOPin_t Copy_DIOPin_tP
  */
 u8 MCAL_DIO_u8ReadPin(DIOPort_t Copy_DIOPort_tDIOx, DIOPin_t Copy_DIOPin_tPINn)
 {
-	u8 pinValue;
+	u8 pinValue = 0;
 	if(Copy_DIOPort_tDIOx < 4)
 	{
 		if(Copy_DIOPin_tPINn < 8)
@@ -172,7 +172,7 @@ void MCAL_DIO_voidWriteWord(DIOPort_t Copy_DIOPort_tDIOx, u8 Copy_u8Word)
  */
 u8 MCAL_DIO_u8WordRead(DIOPort_t Copy_DIOPort_tDIOx)
 {
-	u8 portValue;
+	u8 portValue = 0;
 	if(Copy_DIOPort_tDIOx < 4)
 	{
 		switch(Copy_DIOPort_tDIOx)

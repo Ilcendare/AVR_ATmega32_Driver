@@ -1,9 +1,9 @@
 /** ========================= The file information ========================== */
 /**
- *  Project		  : AVR_ATmega32_Driver
- *  File name   : SEVEN_SEG_interface.h
- *  Created on  : Oct 20, 2023
- *  Author		  : ENG. Mahmoud Sayed
+ *  Project		: AVR_ATmega32_Driver
+ * 	File name	: SEVEN_SEG_interface.h
+ *  Created on	: Oct 20, 2023
+ *  Author		: ENG. Mahmoud Sayed
  **/
 /** ========================================================================= */
 

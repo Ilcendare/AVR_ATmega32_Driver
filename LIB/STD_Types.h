@@ -1,7 +1,7 @@
 /** ========================= The file information ========================== */
 /**
  *  Project: AVR_ATmega32_Driver
- *  File name: STD_Types.h
+ * 	File name: STD_Types.h
  *  Created on: Aug 12, 2023
  *  Author: ENG. Mahmoud Sayed
  **/
@@ -29,7 +29,11 @@ typedef signed short int s16;
 typedef signed long int s32;
 typedef signed long long int s64;
 
+#undef NULL
 #define NULL (void *)0
+
+#undef F_CPU
+#define F_CPU 16000000U
 /** ========================================================================= */
 
 
