@@ -33,65 +33,56 @@ void (*ADC_ISR)(void) = NULL;
 void MCAL_ADC_Init(void)
 {
 	/* Set the ADC VREF */
-	MASK(ADMUX,ADC_VREF_MASK);
-	SET_REG(ADMUX,ADC_VOLTAGE_REFERENCE);
+	ADMUX->ADC_VREF = ADC_VOLTAGE_REFERENCE;
 
 	/* Enable/Disable the ADC left adjust */
 #if	(ADC_LEFT_ADJUST == 1)
-	SET_BIT(ADMUX,5);
+	ADMUX->ADC_Left_Adjust = 1;
 #else
-	CLR_BIT(ADMUX,5);
+	ADMUX->ADC_Left_Adjust = 0;
 #endif
 
 	/* Enable/Disable the ADC Auto trigger mode */
 #if (ADC_AUTO_TRIGGER_ENABLE == 1)
 	/* Enable the ADC Auto trigger mode */
-	SET_BIT(ADCSRA,5);
+	ADCSRA->ADATE = 1;
 
 	/* Set the Auto trigger mode source */
-	MASK(SFIOR,ADC_ATS_MASK);
-	SET_REG(SFIOR,ADC_AUTO_TRIG_SOURCE);
+	SFIOR->ADC_ADTS = ADC_AUTO_TRIG_SOURCE;
 #else
-	CLR_BIT(ADCSRA,5);
-	MASK(SFIOR,ADC_ATS_MASK);
+	ADCSRA->ADATE = 0;
 #endif
 
 	/* Set the ADC clock division */
-	MASK(ADCSRA,ADC_CLK_MASK);
-	SET_REG(ADCSRA,ADC_CLK_DIV_FACTOR);
+	ADCSRA->ADC_Prescaler = ADC_CLK_DIV_FACTOR;
 
 	/* Enable the ADC */
-	SET_BIT(ADCSRA,7);
+	ADCSRA->ADEN = 1;
 }
 
 
 void MCAL_ADC_Deinit(void)
 {
 	/* Disable the ADC */
-	CLR_BIT(ADCSRA,7);
-
-	/* Clear all ADC registers */
-	ADMUX = 0x00;
-	ADCSRA = 0x00;
-	MASK(SFIOR,ADC_ATS_MASK);
+	ADCSRA->ADEN = 0;
 }
 
 
 void MCAL_ADC_SelectChannel(ADC_Channel_t Channel)
 {
 	/* Set the channel selection */
-	MASK(ADMUX,ADC_CHANNEL_MASK);
-	SET_REG(ADMUX,Channel);
+	ADMUX->ADC_Channel = Channel;
 }
 
 
 void MCAL_ADC_StartConversion_PollingMode(void)
 {
 	/* Make sure the ADC Interrupt is disabled */
-	if(GET_BIT(ADCSRA,3) == 1)
+	if(ADCSRA->ADIE == 1)
 	{
-		SET_BIT(ADCSRA,4);	// Clear the ADC Interrupt flag (ADIF)
-		CLR_BIT(ADCSRA,3);	// Clear ADIE
+		ADCSRA->ADIF = 1;	// Clear the ADC Interrupt flag (ADIF)
+		ADCSRA->ADIE = 0;	// Clear ADIE
+
 		if(ADC_ISR != NULL)
 		{
 			ADC_ISR = NULL;
@@ -99,18 +90,18 @@ void MCAL_ADC_StartConversion_PollingMode(void)
 	}
 
 	/* Start the ADC conversion */
-	SET_BIT(ADCSRA,6);
+	ADCSRA->ADSC = 1;
 
 	/* Poll for the ADC conversion */
-	while(GET_BIT(ADCSRA,6) == 0);
+	while(ADCSRA->ADSC == 1);
 }
 
 
 void MCAL_ADC_StartConversion_InterruptMode(void(*CallbackFunction)(void))
 {
 	/* Enable the ADC Interrupt */
-	SET_BIT(ADCSRA,4);	// Clear the ADC Interrupt flag (ADIF)
-	SET_BIT(ADCSRA,3);	// Set ADIE
+	ADCSRA->ADIF = 1;	// Clear the ADC Interrupt flag (ADIF)
+	ADCSRA->ADIE = 1;	// Set ADIE
 
 	/* Set the callback function */
 	if(CallbackFunction != NULL)
@@ -119,7 +110,7 @@ void MCAL_ADC_StartConversion_InterruptMode(void(*CallbackFunction)(void))
 	}
 
 	/* Start the ADC conversion */
-	SET_BIT(ADCSRA,6);
+	ADCSRA->ADSC = 1;
 }
 
 

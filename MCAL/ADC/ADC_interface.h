@@ -21,14 +21,14 @@
 /** ======================== Defining ADC Enumeration ======================= */
 typedef enum ADC_Channel_enum
 {
-ADC0,
-ADC1,
-ADC2,
-ADC3,
-ADC4,
-ADC5,
-ADC6,
-ADC7
+ADC0 = 0b00000,
+ADC1 = 0b00001,
+ADC2 = 0b00010,
+ADC3 = 0b00011,
+ADC4 = 0b00100,
+ADC5 = 0b00101,
+ADC6 = 0b00110,
+ADC7 = 0b00111
 } ADC_Channel_t;
 /** ========================================================================= */
 
