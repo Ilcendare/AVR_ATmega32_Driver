@@ -56,7 +56,7 @@
  * Timer/Counter1 Overflow			->	ADC_ATS_TIM1_OVF
  * Timer/Counter1 Capture Event		->	ADC_ATS_TIM1_IC
  */
-#define	ADC_AUTO_TRIG_SOURCE	ADC_ATS_FREE_RUNNING
+#define	ADC_AUTO_TRIG_SOURCE	ADC_ATS_EXTI0
 
 
 /*
